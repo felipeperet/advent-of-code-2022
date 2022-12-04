@@ -32,16 +32,14 @@ parse c | c == "A" || c == "X" = Rock
         | c == "C" || c == "Z" = Scissors
         | otherwise            = error "Invalid option."
 
-part1 :: FilePath -> IO Int
-part1 fileName = do
-    sum
-        .   map ((\[x, y] -> play x y) . map parse . words)
-        .   lines
-        <$> readFile fileName
+part1 :: IO Int
+part1 = do
+    sum . map ((\[x, y] -> play x y) . map parse . words) . lines <$> readFile
+        "input.txt"
 
-part2 :: FilePath -> IO Int
-part2 fileName = do
+part2 :: IO Int
+part2 = do
     sum
         .   map (uncurry play . (\[x, y] -> strategy (x, y)) . words)
         .   lines
-        <$> readFile fileName
+        <$> readFile "input.txt"
