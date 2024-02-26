@@ -1,17 +1,17 @@
 module Day1 where
 
-import Data.List    (sortBy)
 import Data.Functor ((<&>))
+import Data.List (sortBy)
 
 countCalories :: FilePath -> IO [Integer]
 countCalories fileName = do
     contents <- lines <$> readFile fileName
     let elfs :: [String] -> [[String]]
         elfs input = case break (== "") input of
-            ([], _     ) -> []
-            (xs, []    ) -> [xs]
+            ([], _) -> []
+            (xs, []) -> [xs]
             (xs, _ : ys) -> xs : elfs ys
-        calories    = map (map (read :: String -> Integer)) (elfs contents)
+        calories = map (map (read :: String -> Integer)) (elfs contents)
         sumCalories = map sum calories
     return sumCalories
 
